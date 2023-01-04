@@ -1,12 +1,12 @@
 import List from "./list"
 import Card from "./card"
-import { todoList, inProgressList, doneList } from "./data"
-import { useState } from "react"
+//import { todoList, inProgressList, doneList } from "./data"
+import { useEffect, useState } from "react"
 
 function Board() {
-    const [dragged, setDragged] = useState(null)
+    const [dragged, setDragged] = useState(null)    
     const [listOfList, setListOfList] = useState({
-        todoList, inProgressList, doneList })
+        todoList: [], inProgressList: [], doneList: [] })
     
     function handleDrop(event){
        const list = event.currentTarget.dataset.id
@@ -19,7 +19,27 @@ function Board() {
 
         setListOfList (listOfListClone)
         
+    }    
+
+    const loadData = async () => {
+        const doneResponse = await fetch('/api/done');
+        const doneJson = await doneResponse.json();        
+
+        const inProgressResponse = await fetch('/api/inProgress');
+        const inProgressJSON = await inProgressResponse.json();        
+
+        const todoResponse = await fetch('/api/todo');
+        const todoJSON = await todoResponse.json();        
+
+        setListOfList({
+            todoList: todoJSON, inProgressList: inProgressJSON, doneList: doneJson
+        });
     }
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
     return (
         <div className="flex flex-col flex-1 gap-4 p-4">
             <div>
