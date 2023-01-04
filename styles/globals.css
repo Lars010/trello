@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -38,6 +42,10 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+}
+
+.logo {
+  @apply flex items-center justify-center text-center
 }
 
 @media (prefers-color-scheme: dark) {
