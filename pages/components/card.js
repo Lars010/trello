@@ -9,6 +9,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
     const [currentComment, setCurrentComment] = useState("");
     const [commentsCount, setCommentsCount] = useState(comments.length);
 
+
     function handleDragStart(event) {
         console.log(event.target.closest('[data-id]').dataset.id)
         setDragged({
