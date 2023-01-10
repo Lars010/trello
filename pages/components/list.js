@@ -1,3 +1,4 @@
+import Image from "next/image"
 
 function List({ title, children, handleDrop, id }) {
     function handleDragOver(event) {
@@ -10,8 +11,9 @@ function List({ title, children, handleDrop, id }) {
             <div className="flex flex-col gap-4 overflow-auto">
                 {children}
             </div>
-            <div>
-                agregar otra tarjeta
+            <div className="flex items-center">
+               <Image src='/plus.svg' width={20} height={20} alt='agregar card'/>
+                <p>Agregar otra tarjeta</p>
             </div>
         </div>
         </div>
@@ -19,3 +21,5 @@ function List({ title, children, handleDrop, id }) {
 }
 
 export default List
+
+//importar import Image from "next/image" y luego agregar la imagen del + para agregar una card nuevo.
