@@ -3,6 +3,7 @@ import Card from "./card"
 //import { todoList, inProgressList, doneList } from "./data"
 import { useEffect, useState } from "react"
 
+
 function Board() {
     const [dragged, setDragged] = useState(null)    
     const [listOfList, setListOfList] = useState({
@@ -15,11 +16,10 @@ function Board() {
        const newList = listOfListClone[dragged.list].filter(item => item.id !== dragged.data.id)
        listOfListClone[dragged.list] = newList
        listOfListClone[list].push(dragged.data)
-    
-
         setListOfList (listOfListClone)
-        
-    }    
+    }   
+
+
 
     const loadData = async () => {
         const doneResponse = await fetch('/api/done');
