@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Image from "next/image"
 import NewCardModal from "./newCardModal"
-import { v4 as uuidv4 } from 'uuid';
-import AddCard from "./addCard";
+import AddCard from "./addCard"
 
 function List({ title, children, handleDrop, id }) {
     const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,4 +1,42 @@
-export const todoList = [
+const doneItems = [
+    {
+        title: 'Implementar el diseno',
+        id: 4223,
+        user: {
+            name: 'Leonidas',
+            avatar: '/avatar.png'
+        },
+    },
+    {
+        title: 'Responsive Design',
+        id: 43432,
+        user: {
+            name: 'Leonidas',
+            avatar: '/avatar.png'
+        },
+    },
+    {
+        title: 'Columnas',
+        id: 1133,
+        user: {
+            name: 'Leonidas',
+            avatar: '/avatar.png'
+        },
+    }
+];
+
+const inProgressItems = [
+    {
+        title: 'Mover tarjetas',
+        id: 3423,
+        user: {
+            name: 'Leonidas',
+            avatar: '/avatar.png'
+        },
+    }
+];
+
+const todoItems = [
     {
         title: 'Agregar nuevas tarjetas',
         id: 123,
@@ -39,42 +77,12 @@ export const todoList = [
             avatar: '/avatar.png'
         },
     }
-]
+];
 
-export const inProgressList = [
-    {
-        title: 'Mover tarjetas',
-        id: 3423,
-        user: {
-            name: 'Leonidas',
-            avatar: '/avatar.png'
-        },
-    }
-]
+export default function handler(req, res) {
+    const {
+        query: { list }
+    } = req
 
-export const doneList = [
-    {
-        title: 'Implementar el diseno',
-        id: 4223,
-        user: {
-            name: 'Leonidas',
-            avatar: '/avatar.png'
-        },
-    },
-    {
-        title: 'Responsive Design',
-        id: 43432,
-        user: {
-            name: 'Leonidas',
-            avatar: '/avatar.png'
-        },
-    },
-    {
-        title: 'Columnas',
-        id: 1133,
-        user: {
-            name: 'Leonidas',
-            avatar: '/avatar.png'
-        },
-    }
-]
+    res.status(200).json(doneItems);
+}
