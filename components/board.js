@@ -5,35 +5,38 @@ import { useEffect, useState } from "react"
 
 
 function Board() {
-    const [dragged, setDragged] = useState(null)    
-    const [listOfList, setListOfList] = useState({
-        todoList: [], inProgressList: [], doneList: [] })
-    
-    function handleDrop(event){
-       const list = event.currentTarget.dataset.id
-       const listOfListClone = structuredClone(listOfList)
+    const [dragged, setDragged] = useState(null)
+    const [boardList, setBoardList] = useState([]);
+    const [listOfList, setListOfList] = useState({})
 
-       const newList = listOfListClone[dragged.list].filter(item => item.id !== dragged.data.id)
-       listOfListClone[dragged.list] = newList
-       listOfListClone[list].push(dragged.data)
-        setListOfList (listOfListClone)
-    }   
+    function handleDrop(event) {
+        const list = event.currentTarget.dataset.id
+        const listOfListClone = structuredClone(listOfList)
+
+        const newList = listOfListClone[dragged.list].filter(item => item.id !== dragged.data.id)
+        listOfListClone[dragged.list] = newList
+        listOfListClone[list].push(dragged.data)
+        setListOfList(listOfListClone)
+    }
 
 
 
     const loadData = async () => {
-        const doneResponse = await fetch('/api/done');
-        const doneJson = await doneResponse.json();        
 
-        const inProgressResponse = await fetch('/api/inProgress');
-        const inProgressJSON = await inProgressResponse.json();        
+        let lists = {};
 
-        const todoResponse = await fetch('/api/todo');
-        const todoJSON = await todoResponse.json();        
+        const boardResponse = await fetch('/api/lists');
+        const board = await boardResponse.json();
 
-        setListOfList({
-            todoList: todoJSON, inProgressList: inProgressJSON, doneList: doneJson
-        });
+        for (let loopIndex = 0; loopIndex < board.length; loopIndex++) {
+            const item = board[loopIndex];
+            const itemsResponse = await fetch(`/api/cards/${item.title}`);
+            const items = await itemsResponse.json();
+            lists[item.title] = items;
+        }
+        
+        setBoardList(board);
+        setListOfList(lists);
     }
 
     useEffect(() => {
@@ -48,27 +51,13 @@ function Board() {
                 </h1>
             </div>
             <main className="flex flex-1 gap-6">
-             <List title='TODO' handleDrop={handleDrop} id='todoList'>
-                {
-                    listOfList.todoList.map(item => (
-                        <Card {...item} key={item.id} setDragged={setDragged} />
-                    ))
-                }
-             </List>
-             <List title='In Progress' handleDrop={handleDrop} id='inProgressList'>
-             {
-                    listOfList.inProgressList.map(item => (
-                        <Card {...item} key={item.id} setDragged={setDragged} />
-                    ))
-                }
-             </List>
-             <List title='Done' handleDrop={handleDrop} id='doneList'>
-             {
-                    listOfList.doneList.map(item => (
-                        <Card {...item} key={item.id} setDragged={setDragged} />
-                    ))
-                }
-             </List>
+                {boardList && boardList.map((item) => (
+                    <List title={item.title} handleDrop={handleDrop} id={item.title} key={item.title} >
+                        {listOfList && listOfList[item.title] && listOfList[item.title].map(card => {
+                            <Card {...card} key={card.id} setDragged={setDragged} />
+                        })}
+                    </List>
+                ))}
             </main>
         </div>
     )

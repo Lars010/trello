@@ -1,11 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\components",
     "\\pages",
     "\\pages\\api",
-    "\\pages\\components",
-    "\\public"
+    "\\pages\\api\\cards"
   ],
-  "SelectedNode": "\\pages\\components\\commentList.js",
+  "SelectedNode": "\\components\\card.js",
   "PreviewInSolutionExplorer": false
 }

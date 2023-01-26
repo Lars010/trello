@@ -42,8 +42,10 @@ function Card({ title, user, comments = [], id, setDragged }) {
         comments.push(currentComment);
         console.log("Comment:", currentComment);
     }
-    return (
-         
+
+    debugger;
+
+    return (         
         <div draggable onDragStart={handleDragStart} className="flex flex-col gap-4 p-2 text-gray-900 bg-white rounded-sm">
         <div className="flex justify-between">
             {isEditing ? (
