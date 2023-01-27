@@ -1,6 +1,9 @@
 import Image from "next/image"
 import { useState } from "react";
+import Board from "./board";
 import CommentList from "./commentList";
+import "./data";
+
 
 function Card({ title, user, comments = [], id, setDragged }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -9,9 +12,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
     const [currentComment, setCurrentComment] = useState("");
     const [commentsCount, setCommentsCount] = useState(comments.length);
 
-
     function handleDragStart(event) {
-        console.log(event.target.closest('[data-id]').dataset.id)
         setDragged({
             data: {
                 title,
@@ -28,7 +29,6 @@ function Card({ title, user, comments = [], id, setDragged }) {
     const handleTitleChange = (e) => setCurrentTitle(e.target.value);
     const handleSaveClick = () => {
         setIsEditing(false);
-        // Agrega lógica para actualizar el título de la tarjeta en el servidor
         console.log("Title:", currentTitle);
     }
 
@@ -38,7 +38,6 @@ function Card({ title, user, comments = [], id, setDragged }) {
     const handleCommentSave = () => {
         setIsCommenting(false);
         setCommentsCount(commentsCount + 1);
-        // Agrega lógica para guardar el comentario en el servidor
         comments.push(currentComment);
         console.log("Comment:", currentComment);
     }
@@ -68,7 +67,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
                     {commentsCount > 0 ? commentsCount : null}
                 </span>
                 <span>
-                    <Image src={user.avatar} width={20} height={20} alt='user' />
+                    {/* <Image src={user.avatar} width={20} height={20} alt='user' /> */}
                 </span>
             </div>
             {isCommenting && (
@@ -82,14 +81,13 @@ function Card({ title, user, comments = [], id, setDragged }) {
             )}
             <CommentList comments={comments}/>
         </div>
+    )
+}
+
+export default Card
 
 
-
-
-
-
-
-        // <div draggable onDragStart={handleDragStart} className="flex flex-col gap-4 p-2 text-gray-900 bg-white rounded-sm">
+// <div draggable onDragStart={handleDragStart} className="flex flex-col gap-4 p-2 text-gray-900 bg-white rounded-sm">
         //     <div className="flex justify-between">
         //         <p>
         //             {title}
@@ -108,7 +106,3 @@ function Card({ title, user, comments = [], id, setDragged }) {
         //         </span>
         //     </div>
         // </div>
-    )
-}
-
-export default Card
