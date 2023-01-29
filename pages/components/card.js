@@ -1,24 +1,19 @@
 import Image from "next/image"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentList from "./commentList";
 
-function Card({ title, user, comments = [], id, setDragged }) {
+function Card({ cardItem, setDragged }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [currentTitle, setCurrentTitle] = useState(title);
+    const [currentTitle, setCurrentTitle] = useState(cardItem.title);
     const [isCommenting, setIsCommenting] = useState(false);
     const [currentComment, setCurrentComment] = useState("");
-    const [commentsCount, setCommentsCount] = useState(comments.length);
+    const [commentsCount, setCommentsCount] = useState(cardItem.comments ? cardItem.comments.length : 0);
 
 
     function handleDragStart(event) {
         console.log(event.target.closest('[data-id]').dataset.id)
         setDragged({
-            data: {
-                title,
-                user,
-                comments,
-                id,
-            },
+            data: cardItem,
             list: event.target.closest('[data-id]').dataset.id
         })
     }
@@ -27,6 +22,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
     const handleEditClick = () => setIsEditing(true);
     const handleTitleChange = (e) => setCurrentTitle(e.target.value);
     const handleSaveClick = () => {
+        cardItem.title = currentTitle;
         setIsEditing(false);
         // Agrega lógica para actualizar el título de la tarjeta en el servidor
         console.log("Title:", currentTitle);
@@ -42,6 +38,11 @@ function Card({ title, user, comments = [], id, setDragged }) {
         comments.push(currentComment);
         console.log("Comment:", currentComment);
     }
+
+    useEffect(() => {
+        if (cardItem.comments)
+            cardItem.comments = []
+    }, [])
     return (
          
         <div draggable onDragStart={handleDragStart} className="flex flex-col gap-4 p-2 text-gray-900 bg-white rounded-sm">
@@ -65,10 +66,10 @@ function Card({ title, user, comments = [], id, setDragged }) {
         <div className="flex justify-between">
             <span className="flex gap-1">
             <Image src='/comment.svg' width={20} height={20} alt='comment' onClick={handleCommentClick} />
-                    {commentsCount > 0 ? commentsCount : null}
+                    {cardItem.commentsCount > 0 ? cardItem.commentsCount : null}
                 </span>
                 <span>
-                    <Image src={user.avatar} width={20} height={20} alt='user' />
+                    <Image src={cardItem.user.avatar} width={20} height={20} alt='user' />
                 </span>
             </div>
             {isCommenting && (
@@ -80,7 +81,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
                     </div>
                 </div>
             )}
-            <CommentList comments={comments}/>
+            <CommentList comments={cardItem.comments}/>
         </div>
 
 

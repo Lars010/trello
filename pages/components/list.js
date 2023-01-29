@@ -4,7 +4,7 @@ import NewCardModal from "./newCardModal"
 import { v4 as uuidv4 } from 'uuid';
 import AddCard from "./addCard";
 
-function List({ title, children, handleDrop, id }) {
+function List({ title, children, handleDrop, id, handleAdd }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     function handleDragOver(event) {
         event.preventDefault()
@@ -28,7 +28,7 @@ function List({ title, children, handleDrop, id }) {
                     <button onClick={handleAddCardClick}>Agregar otra tarjeta</button>
                 </div>
             </div>
-            {isModalOpen && <NewCardModal setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && <NewCardModal setIsModalOpen={setIsModalOpen} handleAdd={handleAdd} />}
         </div>
     )
 }

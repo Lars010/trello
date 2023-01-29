@@ -36,6 +36,24 @@ function Board() {
         });
     }
 
+    const addCardTodo = (card) => {
+        const list = { ...listOfList };
+        list.todoList.push(card);
+        setListOfList(list);
+    }
+
+    const addCardInProgress = (card) => {
+        const list = { ...listOfList };
+        list.inProgressList.push(card);
+        setListOfList(list);
+    }
+
+    const addCardDone = (card) => {
+        const list = { ...listOfList };
+        list.doneList.push(card);
+        setListOfList(list);
+    }
+
     useEffect(() => {
         loadData();
     }, []);
@@ -48,24 +66,24 @@ function Board() {
                 </h1>
             </div>
             <main className="flex flex-1 gap-6">
-             <List title='TODO' handleDrop={handleDrop} id='todoList'>
+                <List title='TODO' handleDrop={handleDrop} id='todoList' handleAdd={addCardTodo}>
                 {
                     listOfList.todoList.map(item => (
-                        <Card {...item} key={item.id} setDragged={setDragged} />
+                        <Card cardItem={item} key={item.id} setDragged={setDragged} />
                     ))
                 }
-             </List>
-             <List title='In Progress' handleDrop={handleDrop} id='inProgressList'>
+                </List>
+                <List title='In Progress' handleDrop={handleDrop} id='inProgressList' handleAdd={addCardInProgress}>
              {
                     listOfList.inProgressList.map(item => (
-                        <Card {...item} key={item.id} setDragged={setDragged} />
+                        <Card cardItem={item} key={item.id} setDragged={setDragged} />
                     ))
                 }
-             </List>
-             <List title='Done' handleDrop={handleDrop} id='doneList'>
+                </List>
+                <List title='Done' handleDrop={handleDrop} id='doneList' handleAdd={addCardDone}>
              {
                     listOfList.doneList.map(item => (
-                        <Card {...item} key={item.id} setDragged={setDragged} />
+                        <Card cardItem={item} key={item.id} setDragged={setDragged} />
                     ))
                 }
              </List>

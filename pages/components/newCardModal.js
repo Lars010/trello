@@ -1,12 +1,21 @@
-import { useState } from "react"
+import { useState, useId } from "react"
 
 
-function NewCardModal({setIsModalOpen}) {
+function NewCardModal({ setIsModalOpen, handleAdd}) {
     const [title, setTitle] = useState("");
-
+    const id = useId();
     const handleTitleChange = (e) => setTitle(e.target.value);
     const handleAddClick = () => {
         // Agregar lógica para agregar la tarjeta
+        handleAdd({
+            title: title,
+            id: id,
+            user: {
+                name: 'Leonidas',
+                avatar: '/avatar.png'
+            },
+        });
+        setIsModalOpen(false);
         console.log("Title:", title);
     }
 
