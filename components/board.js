@@ -1,9 +1,14 @@
 import List from "./list";
 import Card from "./card";
+import { v4 as uuidv4 } from "uuid";
+import NewCardModal from "./newCardModal";
 //import { todoList, inProgressList, doneList } from "./data"
 import { useEffect, useState } from "react";
+import Image from "next/image"; 
 
 function Board() {
+  const [cards, setCards] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragged, setDragged] = useState(null);
   const [listOfList, setListOfList] = useState({
     todoList: [],
@@ -14,6 +19,8 @@ function Board() {
   function handleDrop(event) {
     const list = event.currentTarget.dataset.id;
     const listOfListClone = structuredClone(listOfList);
+
+    // Aca tendra que ir el codigo para poder hacer el drop de las nuevas cards
 
     const newList = listOfListClone[dragged.list].filter(
       (item) => item.id !== dragged.data.id
@@ -58,6 +65,20 @@ function Board() {
     setListOfList(list);
   };
 
+  const handleAddCardClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCreateCard = (title) => {
+    const newCard = {
+      key: uuidv4(),
+      title: title,
+    };
+    setCards([...cards, newCard]);
+    setIsModalOpen(false);
+    console.log(newCard);
+  };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -67,18 +88,51 @@ function Board() {
       <div>
         <h1 className="text-2xl font-bold">Development</h1>
       </div>
-      <main className="flex flex-1 gap-6">
-        <List title="TODO" handleDrop={handleDrop} handleCreateCard={addCardTodo} id="todoList">
+      <main className="flex flex-1 gap-6" >
+        <List
+          title="TODO"
+          openModal={handleAddCardClick}
+          modalBoton={"Add new Card"}
+          signoPlus= {<Image src= "/plus.svg" width= '20' height= '20' alt= 'Agregar card' title='Agregar nueva card'/>}
+          handleDrop={handleDrop}
+          handleCreateCard={addCardTodo}
+          id="todoList"
+        >
           {listOfList.todoList.map((item) => (
             <Card {...item} key={item.id} setDragged={setDragged} />
           ))}
+          
+          {isModalOpen && (
+            <NewCardModal
+              setIsModalOpen={setIsModalOpen}
+              handleCreateCard={handleCreateCard}
+            />
+          )}
+          {cards.map((card) => (
+            <Card
+              {...card}
+              setDragged={setDragged}
+              title={card.title}
+              key={card.key}
+            />
+          ))}
         </List>
-        <List title="In Progress" handleDrop={handleDrop} handleCreateCard={addCardInProgress} id="inProgressList">
+        <List
+          title="In Progress"
+          handleDrop={handleDrop}
+          handleCreateCard={addCardInProgress}
+          id="inProgressList"
+        >
           {listOfList.inProgressList.map((item) => (
             <Card {...item} key={item.id} setDragged={setDragged} />
           ))}
         </List>
-        <List title="Done" handleDrop={handleDrop} handleCreateCard={addCardDone} id="doneList">
+        <List
+          title="Done"
+          handleDrop={handleDrop}
+          handleCreateCard={addCardDone}
+          id="doneList"
+        >
           {listOfList.doneList.map((item) => (
             <Card {...item} key={item.id} setDragged={setDragged} />
           ))}
@@ -89,3 +143,5 @@ function Board() {
 }
 
 export default Board;
+
+

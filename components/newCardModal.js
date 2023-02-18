@@ -5,6 +5,7 @@ import List from "./list";
 function NewCardModal({setIsModalOpen, handleCreateCard}) {
     const [title, setTitle] = useState("");
 
+
     const handleTitleChange = (e) => setTitle(e.target.value);
     const handleCreateClick = () => {
         handleCreateCard(title);
