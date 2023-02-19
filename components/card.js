@@ -1,13 +1,12 @@
 import Image from "next/image"
 import { useState } from "react";
-import Board from "./board";
 import CommentList from "./commentList";
 import "./data";
 
 
-function Card({ title, user, comments = [], id, setDragged }) {
+function Card({ cardData, setDragged }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [currentTitle, setCurrentTitle] = useState(title);
+    const [currentTitle, setCurrentTitle] = useState(cardData.title);
     const [isCommenting, setIsCommenting] = useState(false);
     const [currentComment, setCurrentComment] = useState("");
     const [commentsCount, setCommentsCount] = useState(comments.length);
@@ -15,10 +14,10 @@ function Card({ title, user, comments = [], id, setDragged }) {
     function handleDragStart(event) {
         setDragged({
             data: {
-                title,
-                user,
-                comments,
-                id,
+             title: cardData.title,
+             user: cardData.user,
+             comments: cardData.comments,
+             id: cardData.id,
             },
             list: event.target.closest('[data-id]').dataset.id
         })
@@ -28,6 +27,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
     const handleEditClick = () => setIsEditing(true);
     const handleTitleChange = (e) => setCurrentTitle(e.target.value);
     const handleSaveClick = () => {
+        
         setIsEditing(false);
         console.log("Title:", currentTitle);
     }
@@ -79,7 +79,7 @@ function Card({ title, user, comments = [], id, setDragged }) {
                     </div>
                 </div>
             )}
-            <CommentList comments={comments}/>
+            <CommentList comments={ comments }/>
         </div>
     )
 }

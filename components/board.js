@@ -2,9 +2,7 @@ import List from "./list";
 import Card from "./card";
 import NewCardModal from "./newCardModal";
 import { v4 as uuidv4 } from "uuid";
-//import { todoList, inProgressList, doneList } from "./data"
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Image from "next/image";
 
 function Board() {
@@ -55,7 +53,8 @@ function Board() {
   const handleCreateCard = (title) => {
     const newCard = {
       id: uuidv4(),
-      title: title,
+      title,
+    
     };
     //HIze una copia de la lista de listas para luego agregar la nueva card a la lista de todo
     const newList = { ...listOfList };
@@ -91,8 +90,8 @@ function Board() {
           handleDrop={handleDrop}
           id="todoList"
         >
-          {listOfList.todoList.map((item) => (
-            <Card {...item} key={item.id} setDragged={setDragged} />
+          {listOfList.todoList.map((cardData) => (
+            <Card cardData={cardData} key={cardData.id} setDragged={setDragged} />
           ))}
 
           {isModalOpen && (
@@ -107,8 +106,8 @@ function Board() {
           handleDrop={handleDrop}
           id="inProgressList"
         >
-          {listOfList.inProgressList.map((item) => (
-            <Card {...item} key={item.id} setDragged={setDragged} />
+          {listOfList.inProgressList.map((cardData) => (
+            <Card  cardData={cardData} key={cardData.id} setDragged={setDragged} />
           ))}
         </List>
         <List
@@ -116,8 +115,8 @@ function Board() {
           handleDrop={handleDrop}
           id="doneList"
         >
-          {listOfList.doneList.map((item) => (
-            <Card {...item} key={item.id} setDragged={setDragged} />
+          {listOfList.doneList.map((cardData) => (
+            <Card cardData={cardData} key={cardData.id} setDragged={setDragged} />
           ))}
         </List>
       </main>
