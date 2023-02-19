@@ -1,5 +1,1 @@
-export const TrelloBoard = {
-    todoList: [],
-    inProgressList: [],
-    doneList: []
-}
+export const TrelloBoard = {}
