@@ -1,13 +1,12 @@
 import List from "./list";
 import Card from "./card";
-import { v4 as uuidv4 } from "uuid";
 import NewCardModal from "./newCardModal";
+import { v4 as uuidv4 } from "uuid";
 //import { todoList, inProgressList, doneList } from "./data"
 import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 
-function Board() {
-    const [cards, setCards] = useState([]);
+function Board() {    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isCreateCardModalOpen, setIsCreateCardModalOpen] = useState(false);
     const [dragged, setDragged] = useState(null);
@@ -32,7 +31,6 @@ function Board() {
         let json = await resp.json();
         boardColumns.current = json;
     }
-
 
     const loadData = useCallback(async () => {
         if (!boardColumns.current)
@@ -131,5 +129,3 @@ function Board() {
 }
 
 export default Board;
-
-
