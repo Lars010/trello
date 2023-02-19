@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 //import { todoList, inProgressList, doneList } from "./data"
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Image from "next/image";
 
 function Board() {
   const [isModalOpen, setIsModalOpen] = useState(false);
