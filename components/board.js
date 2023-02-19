@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 //import { todoList, inProgressList, doneList } from "./data"
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Image from "next/image";
 
 function Board() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,12 +16,11 @@ function Board() {
     doneList: [],
   });
 
-  function handleDrop(event) {
-    const list = event.currentTarget.dataset.id;
-    const listOfListClone = structuredClone(listOfList);
-    // Codigo de prueba para poder hacer el drop de las nuevas cards
+    function handleDrop(event) {
+        const list = event.currentTarget.dataset.id;
+        const listOfListClone = structuredClone(listOfList);
 
-    // Aca tendra que ir el codigo para poder hacer el drop de las nuevas cards
+        // Aca tendra que ir el codigo para poder hacer el drop de las nuevas cards
 
     const newList = listOfListClone[dragged.list].filter(
       (item) => item.id !== dragged.data.id
@@ -31,15 +31,15 @@ function Board() {
   }
 
 
-  const loadData = async () => {
-    const doneResponse = await fetch("/api/done");
-    const doneJson = await doneResponse.json();
+    const loadData = async () => {
+        const doneResponse = await fetch("/api/done");
+        const doneJson = await doneResponse.json();
 
-    const inProgressResponse = await fetch("/api/inProgress");
-    const inProgressJSON = await inProgressResponse.json();
+        const inProgressResponse = await fetch("/api/inProgress");
+        const inProgressJSON = await inProgressResponse.json();
 
-    const todoResponse = await fetch("/api/todo");
-    const todoJSON = await todoResponse.json();
+        const todoResponse = await fetch("/api/todo");
+        const todoJSON = await todoResponse.json();
 
     setListOfList({
       todoList: todoJSON,
@@ -48,9 +48,9 @@ function Board() {
     });
   };
 
-  const handleAddCardClick = () => {
-    setIsModalOpen(true);
-  };
+    const handleAddCardClick = () => {
+        setIsModalOpen(true);
+    };
 
   const handleCreateCard = (title) => {
     const newCard = {
@@ -65,9 +65,9 @@ function Board() {
     console.log(newCard);
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+    useEffect(() => {
+        loadData();
+    }, []);
 
   return (
     <div className="flex flex-col flex-1 gap-4 p-4">
