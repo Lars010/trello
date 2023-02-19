@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 function Board() {
-  const [cards, setCards] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragged, setDragged] = useState(null);
   const [listOfList, setListOfList] = useState({
@@ -47,24 +46,6 @@ function Board() {
       inProgressList: inProgressJSON,
       doneList: doneJson,
     });
-  };
-
-  const addCardTodo = (card) => {
-    const list = { ...listOfList };
-    list.todoList.push(card);
-    setListOfList(list);
-  };
-
-  const addCardInProgress = (card) => {
-    const list = { ...listOfList };
-    list.inProgressList.push(card);
-    setListOfList(list);
-  };
-
-  const addCardDone = (card) => {
-    const list = { ...listOfList };
-    list.doneList.push(card);
-    setListOfList(list);
   };
 
   const handleAddCardClick = () => {
@@ -108,7 +89,6 @@ function Board() {
             />
           }
           handleDrop={handleDrop}
-          handleCreateCard={addCardTodo}
           id="todoList"
         >
           {listOfList.todoList.map((item) => (
@@ -121,19 +101,10 @@ function Board() {
               handleCreateCard={handleCreateCard}
             />
           )}
-          {cards.map((card) => (
-            <Card
-              {...card}
-              setDragged={setDragged}
-              title={card.title}
-              key={card.id}
-            />
-          ))}
         </List>
         <List
           title="In Progress"
           handleDrop={handleDrop}
-          handleCreateCard={addCardInProgress}
           id="inProgressList"
         >
           {listOfList.inProgressList.map((item) => (
@@ -143,7 +114,6 @@ function Board() {
         <List
           title="Done"
           handleDrop={handleDrop}
-          handleCreateCard={addCardDone}
           id="doneList"
         >
           {listOfList.doneList.map((item) => (
