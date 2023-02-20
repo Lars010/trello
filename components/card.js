@@ -9,7 +9,7 @@ function Card({ cardData, setDragged }) {
     const [currentTitle, setCurrentTitle] = useState(cardData.title);
     const [isCommenting, setIsCommenting] = useState(false);
     const [currentComment, setCurrentComment] = useState("");
-    const [commentsCount, setCommentsCount] = useState(comments.length);
+    const [commentsCount, setCommentsCount] = useState(cardData.comments ? cardData.comments.length : 0);
 
     function handleDragStart(event) {
         setDragged({
@@ -38,7 +38,11 @@ function Card({ cardData, setDragged }) {
     const handleCommentSave = () => {
         setIsCommenting(false);
         setCommentsCount(commentsCount + 1);
-        comments.push(currentComment);
+
+        if (!cardData.comments)
+            cardData.comments = [];
+
+        cardData.comments.push(currentComment);
         console.log("Comment:", currentComment);
     }
     return (
@@ -79,7 +83,7 @@ function Card({ cardData, setDragged }) {
                     </div>
                 </div>
             )}
-            <CommentList comments={ comments }/>
+            <CommentList comments={ cardData.comments }/>
         </div>
     )
 }

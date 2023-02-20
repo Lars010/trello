@@ -3,9 +3,6 @@ import Card from "./card";
 import NewCardModal from "./newCardModal";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState, useRef, useCallback } from "react";
-
-import { useEffect, useState } from "react";
-
 import Image from "next/image";
 
 function Board() {    
@@ -108,7 +105,7 @@ function Board() {
                         signoPlus={index === 0 ? <Image src="/plus.svg" width='20' height='20' alt='Agregar card' title='Agregar nueva card' /> : undefined}>
                         {listOfList && listOfList[item] && listOfList[item].map((cardItem) => {                            
                             return (
-                                <Card {...cardItem} key={cardItem.id} setDragged={setDragged} />
+                                <Card cardData={cardItem} key={cardItem.id} setDragged={setDragged} />
                             )
                         })}
                     </List>);
