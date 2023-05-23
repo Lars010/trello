@@ -1,15 +1,26 @@
 import { useState } from "react";
 import Image from "next/image";
 import NewCardModal from "./newCardModal";
+import React, { ReactNode } from 'react';
 
-function List({ title, children, handleDrop, id, openModal, modalBoton, signoPlus }) {
-    function handleDragOver(event) {
-        event.preventDefault();
+interface ListProps {
+    title: string;
+    children: ReactNode;
+    handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+    id: string;
+    openModal: () => void;
+    modalBoton: string;
+    signoPlus?: ReactNode;
+  }
+  
+  function List({ title, children, handleDrop, id, openModal, modalBoton, signoPlus }: ListProps) {
+    function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
+      event.preventDefault();
     }
-
-    const handleEditClick = (evt) => {
-
-    }
+  
+    const handleEditClick = (evt: React.MouseEvent<HTMLImageElement>) => {
+      // Handle edit click logic here
+    };
 
     return (
         <div

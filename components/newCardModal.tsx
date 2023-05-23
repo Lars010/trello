@@ -1,23 +1,21 @@
-import { useState } from "react"
-import List from "./list";
+import React, { useState, ChangeEvent } from 'react';
 
+interface NewCardModalProps {
+  setIsModalOpen: (isOpen: boolean) => void;
+  handleCreateCard: (title: string) => void;
+}
 
-function NewCardModal({setIsModalOpen, handleCreateCard}) {
-    const [title, setTitle] = useState("");
+function NewCardModal({ setIsModalOpen, handleCreateCard }: NewCardModalProps) {
+  const [title, setTitle] = useState('');
 
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleCreateClick = () => {
+    handleCreateCard(title);
+    setIsModalOpen(false);
+  };
 
-    const handleTitleChange = (e) => setTitle(e.target.value);
-    const handleCreateClick = () => {
-        handleCreateCard(title);
-        setIsModalOpen(false);
-    };
+  const handleCerrarClick = () => setIsModalOpen(false);
 
-    // const handleAddClick = () => {
-        
-    //     console.log("Title:", title);
-    // }
-
-    const handleCerrarClick = () => setIsModalOpen(false);
 
     return (
         <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full">

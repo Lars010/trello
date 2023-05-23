@@ -3,48 +3,64 @@ import { useState } from "react";
 import CommentList from "./commentList";
 import "./data";
 
+interface Comment {
+  text: string;
+}
 
-function Card({ cardData, setDragged }) {
+interface CardData {
+    title: string;
+    user: string;
+    comments?: Comment[];
+    id: string;
+  }
+  
+  interface CardProps {
+    cardData: CardData;
+    setDragged: (dragged: { data: CardData; list: string }) => void;
+  }
+  
+  function Card({ cardData, setDragged }: CardProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [currentTitle, setCurrentTitle] = useState(cardData.title);
     const [isCommenting, setIsCommenting] = useState(false);
     const [currentComment, setCurrentComment] = useState("");
     const [commentsCount, setCommentsCount] = useState(cardData.comments ? cardData.comments.length : 0);
-
-    function handleDragStart(event) {
-        setDragged({
-            data: {
-             title: cardData.title,
-             user: cardData.user,
-             comments: cardData.comments,
-             id: cardData.id,
-            },
-            list: event.target.closest('[data-id]').dataset.id
-        })
+  
+    function handleDragStart(event: React.DragEvent<HTMLDivElement>) {
+      setDragged({
+        data: {
+          title: cardData.title,
+          user: cardData.user,
+          comments: cardData.comments,
+          id: cardData.id,
+        },
+        list: (event.currentTarget.closest('[data-id]') as HTMLElement)!.dataset.id!
+      });
     }
-
-
+  
     const handleEditClick = () => setIsEditing(true);
-    const handleTitleChange = (e) => setCurrentTitle(e.target.value);
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setCurrentTitle(e.target.value);
     const handleSaveClick = () => {
-        
-        setIsEditing(false);
-        console.log("Title:", currentTitle);
+      setIsEditing(false);
+      console.log("Title:", currentTitle);
     }
-
+  
     const handleCommentClick = () => setIsCommenting(true);
-    const handleCommentChange = (e) => setCurrentComment(e.target.value);
+    const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setCurrentComment(e.target.value);
     const handleCommentCancel = () => setIsCommenting(false);
     const handleCommentSave = () => {
-        setIsCommenting(false);
-        setCommentsCount(commentsCount + 1);
-
-        if (!cardData.comments)
-            cardData.comments = [];
-
-        cardData.comments.push(currentComment);
-        console.log("Comment:", currentComment);
+      setIsCommenting(false);
+      setCommentsCount(commentsCount + 1);
+  
+      if (!cardData.comments)
+        cardData.comments = [];
+  
+      cardData.comments.push({ text: currentComment });
+      console.log("Comment:", currentComment);
     }
+
+
+
     return (
          
         <div draggable onDragStart={handleDragStart} className="flex flex-col gap-4 p-2 text-gray-900 bg-white rounded-sm">
