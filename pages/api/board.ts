@@ -1,4 +1,4 @@
-import { BoardList } from './../../components/helpers/boardList';
+import { BoardList } from '../../components/helpers/boardList';
 
 export default function handler(req, res) {
     if (req.method === 'POST') {

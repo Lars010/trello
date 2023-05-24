@@ -1,4 +1,4 @@
-import { TrelloBoard } from './../../../components/helpers/storedLists';
+import { TrelloBoard } from '../../../components/helpers/storedLists';
 
 export default function handler(req, res) {
     if (req.method === 'POST') {

@@ -1,1 +1,1 @@
-export const TrelloBoard = {}
+export const TrelloBoard: Record<string, any[]> = {};
