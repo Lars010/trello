@@ -1,6 +1,6 @@
 import { TrelloBoard } from '../../../components/helpers/storedLists';
 
-export default function handler(req, res) {
+export default function handler(req: { method: string; body: string; query: { list: string | number; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: string | boolean): void; new(): any; }; }; }) {
     if (req.method === 'POST') {
         // Process a POST request
         // Aca tendra que ir el codigo para poder hacer el drop de las nuevas cards        
